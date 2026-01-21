@@ -1,0 +1,22 @@
+# base Docker image for build
+FROM python:3.13.10-slim
+
+#copying the uv binary for build
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
+
+#set up the working directory inside the conatiner
+WORKDIR /app
+
+# Add a virtual env to Path to use the installed packages
+ENV PATH="/app/.venv/bin:$PATH"
+
+#copying the script to the container working dir
+COPY "pyproject.toml" "uv.lock" ".python-version" ./
+
+#installing the dependencies from the lock file (for repeatability)
+RUN uv sync --locked
+
+COPY pipeline.py pipeline.py
+
+#define first steps when the container is ran
+ENTRYPOINT [ "python", "pipeline.py"]
