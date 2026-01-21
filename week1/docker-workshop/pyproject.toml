@@ -8,3 +8,11 @@ dependencies = [
     "pandas>=2.3.3",
     "pyarrow>=23.0.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pgcli>=4.4.0",
+    "psycopg>=3.3.2",
+    "psycopg-binary>=3.3.2",
+    "psycopg-pool>=3.3.0",
+]
